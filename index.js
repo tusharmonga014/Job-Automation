@@ -14,9 +14,9 @@ async function fn() {
     let page = pagesArr[0];
     // await page.goto(url[0]);
     await page.goto(url_);
-    // console.log(url_);
-    page.waitForNavigation();
-    // await page.click(".css-b3pn3b .css-16xevfn");
+
+    await page.waitForSelector(".css-b3pn3b .css-16xevfn", { visible: true ,timeout: 100000});
+    await page.click(".css-b3pn3b .css-16xevfn");
 
 }
 fn();
