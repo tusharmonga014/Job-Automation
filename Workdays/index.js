@@ -1,5 +1,6 @@
 let puppeteer = require("puppeteer");
-let credentials = require("./credentials.json");
+let credentials = require("../credentials.json");
+let questions = require("./questions");
 
 async function fn() {
     // browser instance
@@ -28,16 +29,18 @@ async function fn() {
 
     await page.waitForSelector(".css-1t71xfh", { visible: true, timeout: 100000 });
     await page.click(".css-1t71xfh");
-
-    await page.waitForSelector("#input-1", { visible: true, timeout: 100000 });
-    await page.type("#input-1", credentials.source);
-    await page.keyboard.press("Enter");
-
-    const element = await page.$('[data-automation-id="previousWorker"]');
-    const class_ = await element.getProperty('className');
-    const className = (await class_.jsonValue()).split(" ")[0];
-    console.log(className);
+        
+    await page.waitForSelector(`[data-automation-id="${questions[0].dataAutomationId}"]`, { visible: true, timeout: 100000 });
+    for (let questionIndex in questions) {
+        const question = questions[questionIndex];
+        const questionElement = await page.$(`[data-automation-id="${question.dataAutomationId}"]`);
+        if (questionElement) {
+            await question.fillValue(page, credentials);
+        }
+    }
 }
 fn();
+
+
 
 
