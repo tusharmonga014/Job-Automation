@@ -1,5 +1,5 @@
 let puppeteer = require("puppeteer");
-let { email, password, url_ } = require("./credentials.json");
+let credentials = require("./credentials.json");
 
 async function fn() {
     // browser instance
@@ -13,7 +13,7 @@ async function fn() {
     let pagesArr = await browser.pages();
     let page = pagesArr[0];
     // await page.goto(url[0]);
-    await page.goto(url_);
+    await page.goto(credentials.url_);
 
     await page.waitForSelector(".css-b3pn3b .css-16xevfn", { visible: true, timeout: 100000 });
     await page.click(".css-b3pn3b .css-16xevfn");
@@ -23,10 +23,20 @@ async function fn() {
     await applyManuallyBtn.click();
 
     await page.waitForSelector("#input-4", { visible: true, timeout: 100000 });
-    await page.type("#input-4", email);
-    await page.type("#input-5", password);
+    await page.type("#input-4", credentials.email);
+    await page.type("#input-5", credentials.password);
 
-    await page.click(".css-jimc6x");
+    await page.waitForSelector(".css-1t71xfh", { visible: true, timeout: 100000 });
+    await page.click(".css-1t71xfh");
+
+    await page.waitForSelector("#input-1", { visible: true, timeout: 100000 });
+    await page.type("#input-1", credentials.source);
+    await page.keyboard.press("Enter");
+
+    const element = await page.$('[data-automation-id="previousWorker"]');
+    const class_ = await element.getProperty('className');
+    const className = (await class_.jsonValue()).split(" ")[0];
+    console.log(className);
 }
 fn();
 
