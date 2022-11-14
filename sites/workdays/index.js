@@ -1,6 +1,7 @@
 let puppeteer = require("puppeteer");
 let credentials = require("../../credentials.json");
 let questions = require("./questions");
+const { fillValue } = require("../utility");
 
 const url_ = "https://qualcomm.wd5.myworkdayjobs.com/External/job/Hyderabad-IND/Engineer--Sr-Engineer_3044109-1";
 
@@ -31,7 +32,7 @@ async function fn() {
 
     await page.waitForSelector(".css-1t71xfh", { visible: true, timeout: 100000 });
     await page.click(".css-1t71xfh");
-        
+
     await page.waitForSelector(questions[0].selector, { visible: true, timeout: 100000 });
     for (let questionIndex in questions) {
         const question = questions[questionIndex];
