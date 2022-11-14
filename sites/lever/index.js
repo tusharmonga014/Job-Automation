@@ -1,22 +1,8 @@
 let puppeteer = require("puppeteer");
 let questions = require("./questions");
+const { fillValue } = require("../utility");
 
 const url_ = "https://jobs.lever.co/paytm/30bd4826-358c-41b4-8ec4-394d704279d9";
-
-async function fillValue(page, question) {
-    const questionElement = await page.$(question.selector);
-    const isRequiredJSHandle = await questionElement.getProperty("required");
-    const isRequired = await isRequiredJSHandle.jsonValue();
-
-    if (!isRequired && !question.fillIfNotRequired)
-        return;
-
-    let value = question.answer;
-    if (!value)
-        value = question.default;
-
-    await question.fillValue(page, value);
-}
 
 async function fn() {
     // browser instance

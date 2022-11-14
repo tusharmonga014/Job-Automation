@@ -1,9 +1,12 @@
+const credentials = require("../../credentials.json");
+
 const questions = [
     {
-        dataAutomationId: "formField-sourcePrompt",
-        answer: "source",
-        fillValue: async function (page, credentials) {
-            await page.waitForSelector('#input-1', { visible: true, timeout: 100000 });
+        selector: '[data-automation-id="formField-sourcePrompt"]',
+        answer: credentials.source,
+        default: "NA",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
             await page.type('#input-1', credentials.source);
             await page.keyboard.press('Enter');
         }
@@ -11,8 +14,10 @@ const questions = [
 
     {
         dataAutomationId: "previousWorker",
-        answer: "previouslyWorked",
-        fillValue: async function (page, credentials) {
+        answer: credentials.previouslyWorked,
+        default: "NA",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
             const questionElement = await page.$('[data-automation-id="previousWorker"]');
             const id_ = await questionElement.getProperty('id');
             const id = (await id_.jsonValue()).split(" ")[0];
@@ -31,7 +36,8 @@ const questions = [
     {
         dataAutomationId: "legalNameSection_firstName",
         answer: "firstName",
-        fillValue: async function (page, credentials) {
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
             const firstNameElement = await page.$('input[data-automation-id="legalNameSection_firstName"]');
             await firstNameElement.type(credentials.firstName);
         }
@@ -40,7 +46,8 @@ const questions = [
     {
         dataAutomationId: "legalNameSection_lastName",
         answer: "lastName",
-        fillValue: async function (page, credentials) {
+        fillIfNotRequired: true,
+        fillValue: async function (page, vlaue) {
             const firstNameElement = await page.$('input[data-automation-id="legalNameSection_lastName"]');
             await firstNameElement.type(credentials.lastName);
         }
