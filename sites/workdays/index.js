@@ -41,6 +41,7 @@ async function fn() {
             await fillValue(page, question);
         }
     }
+    await page.click('button[data-automation-id="bottom-navigation-next-button"]');
 }
 fn();
 

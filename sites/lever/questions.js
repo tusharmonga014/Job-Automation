@@ -3,12 +3,14 @@ const path = require("path");
 
 const questions = [
     {
-        selector: 'input[name="resume"]',
-        answer: "../../resume.pdf",
+        selector: 'input[type="file"]',
+        answer: "/resume.pdf",
         default: "",
         fillIfNotRequired: true,
         fillValue: async function (page, value) {
-            // const filePath = path.relative(process.cwd(), __dirname + value);
+            // await page.waitForSelector(this.selector, { visible: true, timeout: 100000 });
+            // const filePath = path.join(process.cwd(), value);
+            // console.log(filePath);
             // const fileUploadElement = await page.$(this.selector);
             // await fileUploadElement.uploadFile(filePath);
 
@@ -142,7 +144,7 @@ const questions = [
 
     {
         selector: 'input[name="cards[0d68b70b-bc08-4129-9b6a-ec302aa785ec][field4]',
-        answer: credentials.currentLocation,
+        answer: credentials.address.state,
         default: "India",
         fillIfNotRequired: true,
         fillValue: async function (page, value) {

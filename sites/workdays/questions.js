@@ -21,14 +21,14 @@ const questions = [
             const questionElement = await page.$(this.selector);
             const id_ = await questionElement.getProperty('id');
             const id = (await id_.jsonValue()).split(" ")[0];
-            const selector = "#" + id + " .css-qy3315";
-            const options = await page.$$(selector);
+            const selector = "#" + id + ` input[id="${value ? 1 : 2}"]`;
 
-            if (value) {
-                await options[0].click();
-            } else {
-                await options[1].click();
-            }
+            await page.waitForSelector(selector, { visible: true, timeout: 100000 });
+            const option = await page.$(selector);
+            await page.waitForTimeout(1000);
+
+            await option.click();
+            await option.click();
         }
     },
 
@@ -38,8 +38,7 @@ const questions = [
         default: "NA",
         fillIfNotRequired: true,
         fillValue: async function (page, value) {
-            const firstNameElement = await page.$(this.selector);
-            await firstNameElement.type(value);
+            await page.type(this.selector, value);
         }
     },
 
@@ -49,8 +48,47 @@ const questions = [
         default: "NA",
         fillIfNotRequired: true,
         fillValue: async function (page, value) {
-            const lastNameElement = await page.$(this.selector);
-            await lastNameElement.type(value);
+            await page.type(this.selector, value);
+        }
+    },
+
+    {
+        selector: 'input[data-automation-id="addressSection_addressLine1"]',
+        answer: credentials.address.residence,
+        default: "NA",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
+            await page.type(this.selector, value);
+        }
+    },
+
+    {
+        selector: 'input[data-automation-id="addressSection_city"]',
+        answer: credentials.address.city,
+        default: "NA",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
+            await page.type(this.selector, value);
+        }
+    },
+
+    {
+        selector: 'input[data-automation-id="addressSection_postalCode"]',
+        answer: credentials.address.pincode,
+        default: "000000",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
+            await page.type(this.selector, value);
+        }
+    },
+
+    {
+        selector: 'input[data-automation-id="phone-number"]',
+        answer: credentials.phoneNumber,
+        default: "9999999999",
+        fillIfNotRequired: true,
+        fillValue: async function (page, value) {
+            await page.type(this.selector, value);
         }
     }
 ];
