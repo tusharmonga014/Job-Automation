@@ -88,13 +88,70 @@ const pages = [
             {
                 selector: 'input[data-automation-id="phone-number"]',
                 answer: credentials.phoneNumber,
-                default: "9999999999",
+                default: "",
                 fillIfNotRequired: true,
                 fillValue: async function (page, value) {
                     await page.type(this.selector, value);
                 }
             }
         ]
+    },
+
+    {
+        saveAndContinueBtn: 'button[data-automation-id="bottom-navigation-next-button"]',
+        questions: [
+            {
+                selector: 'input[data-automation-id="jobTitle"]',
+                answer: credentials.experiences[0].jobTitle,
+                default: "NA",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    await page.type(this.selector, value);
+                }
+            },
+
+            {
+                selector: 'input[data-automation-id="company"]',
+                answer: credentials.experiences[0].companyName,
+                default: "NA",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    await page.type(this.selector, value);
+                }
+            },
+
+            {
+                selector: 'input[data-automation-id="location"]',
+                answer: credentials.experiences[0].location,
+                default: "NA",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    await page.type(this.selector, value);
+                }
+            },
+
+
+            {
+                selector: 'input[data-automation-id="dateSectionMonth-input"]',
+                answer: credentials.experiences[0].startDate.month,
+                default: "00",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    await page.type(this.selector, value);
+                }
+            },
+
+            {
+                selector: 'textarea[data-automation-id="description"]',
+                answer: credentials.experiences[0].description,
+                default: "NA",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    await page.type(this.selector, value);
+                }
+            }
+        ]
+
     }
 ];
 
