@@ -13,6 +13,20 @@ async function fillValue(page, question) {
     await question.fillValue(page, value);
 }
 
+async function fillPageQuestions(page, firstSelector, saveBtnSelector, questions) {
+    await page.waitForSelector(firstSelector, { visible: true, timeout: 100000 });
+
+    for (let questionIndex in questions) {
+        const question = questions[questionIndex];
+        const questionElement = await page.$(question.selector);
+        if (questionElement) {
+            await fillValue(page, question);
+        }
+    }
+
+    await page.click(saveBtnSelector);
+}
+
 module.exports = {
-    fillValue
+    fillPageQuestions
 }
