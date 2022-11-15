@@ -130,14 +130,51 @@ const pages = [
                 }
             },
 
-
             {
-                selector: 'input[data-automation-id="dateSectionMonth-input"]',
+                selector: 'div[data-automation-id="workExperience-1"] input[data-automation-id="dateSectionMonth-input"]',
                 answer: credentials.experiences[0].startDate.month,
                 default: "00",
                 fillIfNotRequired: true,
                 fillValue: async function (page, value) {
-                    await page.type(this.selector, value);
+                    const months = await page.$$(this.selector);
+                    const startMonthElementHandle = months[0];
+                    await startMonthElementHandle.type(value);
+                }
+            },
+
+            {
+                selector: 'div[data-automation-id="workExperience-1"] input[data-automation-id="dateSectionYear-input"]',
+                answer: credentials.experiences[0].startDate.year,
+                default: "0000",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    const years = await page.$$(this.selector);
+                    const startYearElementHandle = years[0];
+                    await startYearElementHandle.type(value);
+                }
+            },
+
+            {
+                selector: 'div[data-automation-id="workExperience-1"] input[data-automation-id="dateSectionMonth-input"]',
+                answer: credentials.experiences[0].endDate.month,
+                default: "00",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    const months = await page.$$(this.selector);
+                    const endMonthElementHandle = months[1];
+                    await endMonthElementHandle.type(value);
+                }
+            },
+
+            {
+                selector: 'div[data-automation-id="workExperience-1"] input[data-automation-id="dateSectionYear-input"]',
+                answer: credentials.experiences[0].endDate.year,
+                default: "0000",
+                fillIfNotRequired: true,
+                fillValue: async function (page, value) {
+                    const years = await page.$$(this.selector);
+                    const endYearElementHandle = years[1];
+                    await endYearElementHandle.type(value);
                 }
             },
 
